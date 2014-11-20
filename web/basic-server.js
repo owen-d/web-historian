@@ -11,16 +11,13 @@ var router = {
 };
 var whiteList = {
   '/styles.css': handler.handleRequest,
-  '/': handler.handleRequest
+  '/': handler.handleRequest,
+  '/loading.html':handler.handleRequest
 }
 
 var server = http.createServer( function(req, res){
   var reqPath = url.parse(req.url).pathname;
-  if(req.method === 'POST'){
-    console.log(req.url);
-    console.log('posted');
-  }
-  console.log(reqPath.split('/'));
+  // console.log(reqPath.split('/'));
   if(router[reqPath.split('/')[1]] ){
     router[reqPath.split('/')[1]](req, res, reqPath);
   }

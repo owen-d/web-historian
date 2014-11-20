@@ -2,13 +2,14 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="styles.css" />
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 </head>
 <body>
   Enter a URL here:
   <form method="POST">
     <input type="input" name="url"></input>
   </form>
+  <a href="loading.html">click </a>
 </body>
 </html>
 <script>
@@ -18,9 +19,23 @@
             e.preventDefault();
             $.ajax({
               type: 'POST',
-              url: 'http://127.0.0.1:8080/sites/'+$(this).val()
+              url: 'http://127.0.0.1:8080/sites/'+$(this).val(),
+              success: function(data) {
+                // console.log(data);
+                $('body').empty().html(data);
+              },
+              beforeSend: function(){
+                $.ajax({
+                  type: 'POST',
+                  url: 'http://127.0.0.1:8080/loading.html',
+                  success: function(data){
+                    $('body').empty().html(data);
+                  }
+                });
+              }
             });
             console.log('passing: /sites/'+ $(this).val());
+            // window.location = ('http://127.0.0.1:8080/loading.html');
             $(this).val('');
           }
       });
