@@ -20,6 +20,10 @@ exports.serveAssets = function(res, asset) {
   console.log('serving assets:', asset);
   fs.readFile(asset, {encoding: 'utf8'}, function(err, data){
     if(err){
+      //write site to sitesToBeArchived.txt
+      fs.appendFile('../archives/sitesToBeArchived.txt', asset.replace('../archives/sites/','')+',', function(err){
+        console.log('failed to write to file');
+      });
       res.writeHead(404, headers );
       res.end(JSON.stringify(err));
     } else {
