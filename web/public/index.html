@@ -2,6 +2,7 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="styles.css" />
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
   Enter a URL here:
@@ -10,3 +11,17 @@
   </form>
 </body>
 </html>
+<script>
+
+  $('input').keypress(function(e) {
+          if(e.which == 13) {
+            e.preventDefault();
+            $.ajax({
+              type: 'POST',
+              url: 'http://127.0.0.1:8080/sites/'+$(this).val()
+            });
+            console.log('passing: /sites/'+ $(this).val());
+            $(this).val('');
+          }
+      });
+</script>

@@ -7,7 +7,7 @@ var port = 8080;
 var ip = "127.0.0.1";
 var router = {
   //routes pages
-  '/sites': handler.handleRequest
+  'sites': handler.handleRequest
 };
 var whiteList = {
   '/styles.css': handler.handleRequest,
@@ -16,12 +16,13 @@ var whiteList = {
 
 var server = http.createServer( function(req, res){
   var reqPath = url.parse(req.url).pathname;
-  // if(req.method === 'POST'){
-  //   console.log('post');
-  // }
-  console.log(req.url);
-  if(router[reqPath]){
-    router[reqPath](req, res, reqPath);
+  if(req.method === 'POST'){
+    console.log(req.url);
+    console.log('posted');
+  }
+  console.log(reqPath.split('/'));
+  if(router[reqPath.split('/')[1]] ){
+    router[reqPath.split('/')[1]](req, res, reqPath);
   }
   else if (whiteList[reqPath]){
     whiteList[reqPath](req, res, reqPath);

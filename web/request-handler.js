@@ -16,13 +16,31 @@ exports.handleRequest = function (req, res, reqPath) {
   }
   else if (reqPath === '/styles.css') {
     reqPath = './public/styles.css';
+  } else {
+    //check sites.txt using fs.readFile
+    console.log('reading sites');
+    fs.readFile('../archives/sites.txt', {encoding:'utf8'}, function(err, data){
+      if(err){
+        console.log('error reading file:', JSON.stringify(err))
+      } else {
+        reqPath == './public/loading.html';
+        console.log("data",data);
+      }
+    })
+    //if site exists in sites.txt
+
+
   }
-  console.log(req.url);
+    //set reqPath == local sites cache
+  //else
+    //set reqPath to loading.html
+    //fire html fetcher thing
+  // console.log(req.url);
   fs.readFile(reqPath,{encoding:"utf8"}, function(err, data){
     if(err){
       res.writeHead(404, helpers.headers );
-      res.end(err);
-    } else{
+      res.end(JSON.stringify(err));
+    } else {
       helpers.headers['Content-Type'] = typeConversions[path.extname(reqPath)];
       res.writeHead(200, helpers.headers)
       res.write(data);
