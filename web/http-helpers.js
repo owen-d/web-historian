@@ -30,7 +30,7 @@ exports.serveAssets = function(res, asset) {
       console.log('success');
       headers['Content-Type'] = typeConversions[path.extname(asset)];
       res.writeHead(200, headers);
-      res.write(data);
+      res.write(data); //var sites = data.split(',')
       res.end();
     }
   });
